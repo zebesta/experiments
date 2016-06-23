@@ -14,7 +14,7 @@ import java.util.ArrayList;
  */
 public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
     //private String[] mDataset;
-    private ArrayList<String> mDataset;
+    private ArrayList<PlantData> mDataset;
 
     // Provide a reference to the views for each data item
     // Complex data items may need more than one view per item, and
@@ -33,7 +33,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
 
     // Provide a suitable constructor (depends on the kind of dataset)
     //public MyAdapter(String[] myDataset) {
-    public MyAdapter(ArrayList<String> myDataset) {
+    public MyAdapter(ArrayList<PlantData> myDataset) {
 
         mDataset = myDataset;
     }
@@ -56,7 +56,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
         //holder.mTextViewInCard.setText(mDataset[position]);
-        holder.mTextViewInCard.setText(mDataset.get(position));
+        holder.mTextViewInCard.setText(mDataset.get(position).getName());
 
     }
 

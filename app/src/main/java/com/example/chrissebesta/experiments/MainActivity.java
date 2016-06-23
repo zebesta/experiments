@@ -1,9 +1,11 @@
 package com.example.chrissebesta.experiments;
 
 import android.content.ContentValues;
+import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -30,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
+    ArrayList<PlantData> plantDataList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,11 +49,23 @@ public class MainActivity extends AppCompatActivity {
             myDataList.add(i, "Im adding an item at index "+ i);
         }
 
-        mAdapter = new MyAdapter(myDataList);
-        mRecyclerView.setAdapter(mAdapter);
+//        mAdapter = new MyAdapter(plantDataList);
+//        mRecyclerView.setAdapter(mAdapter);
+
+//        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+//
+//        boolean previouslyStarted = sharedPreferences.getBoolean(getString(R.string.pref_previously_started), false);
+//        if (!previouslyStarted) {
+//            firstRun();
+//        }
         FetchJSON fetch = new FetchJSON();
         fetch.execute();
     }
+
+//    private void firstRun() {
+//        FetchJSON fetch = new FetchJSON();
+//        fetch.execute();
+//    }
 
 
     private class FetchJSON extends AsyncTask<Void, Void, Void> {
@@ -111,17 +126,92 @@ public class MainActivity extends AppCompatActivity {
                     Iterator<String> iter = jsonObject.keys();
 
                     ContentValues cv = new ContentValues();
+                    PlantData plantData = new PlantData();
                     while (iter.hasNext()) {
                         String key = iter.next();
                         cv.put(key, jsonObject.get(key).toString());
+                        switch(key){
+                            case(PlantContract.PlantEntry.id): //"id";
+                                plantData.setId(jsonObject.get(key).toString());
+                                break;
+                            case(PlantContract.PlantEntry.name): //"name";
+                                plantData.setName(jsonObject.get(key).toString());
+                                break;
+                            case(PlantContract.PlantEntry.description): //"description";
+                                plantData.setDescription(jsonObject.get(key).toString());
+                                break;
+                            case(PlantContract.PlantEntry.optimal_sun): //"optimal_sun";
+                                plantData.setOptimal_sun(jsonObject.get(key).toString());
+                                break;
+                            case(PlantContract.PlantEntry.optimal_soil): //"optimal_soil";
+                                plantData.setOptimal_soil(jsonObject.get(key).toString());
+                                break;
+                            case(PlantContract.PlantEntry.planting_considerations): //"planting_considerations";
+                                plantData.setPlanting_considerations(jsonObject.get(key).toString());
+                                break;
+                            case(PlantContract.PlantEntry.when_to_plant): //"when_to_plant";
+                                plantData.setWhen_to_plant(jsonObject.get(key).toString());
+                                break;
+                            case(PlantContract.PlantEntry.growing_from_seed): //"growing_from_seed";
+                                plantData.setGrowing_from_seed(jsonObject.get(key).toString());
+                                break;
+                            case(PlantContract.PlantEntry.transplanting): //"transplanting";
+                                plantData.setTransplanting(jsonObject.get(key).toString());
+                                break;
+                            case(PlantContract.PlantEntry.spacing): //"spacing";
+                                plantData.setSpacing(jsonObject.get(key).toString());
+                                break;
+                            case(PlantContract.PlantEntry.watering): //"watering";
+                                plantData.setWatering(jsonObject.get(key).toString());
+                                break;
+                            case(PlantContract.PlantEntry.feeding): //"feeding";
+                                plantData.setFeeding(jsonObject.get(key).toString());
+                                break;
+                            case(PlantContract.PlantEntry.other_care): //"other_care";
+                                plantData.setOther_care(jsonObject.get(key).toString());
+                                break;
+                            case(PlantContract.PlantEntry.diseases): //"diseases";
+                                plantData.setDiseases(jsonObject.get(key).toString());
+                                break;
+                            case(PlantContract.PlantEntry.pests): //"pests";
+                                plantData.setPests(jsonObject.get(key).toString());
+                                break;
+                            case(PlantContract.PlantEntry.harvesting): //"harvesting";
+                                plantData.setHarvesting(jsonObject.get(key).toString());
+                                break;
+                            case(PlantContract.PlantEntry.storage_use): //"storage_use";
+                                plantData.setStorage_use(jsonObject.get(key).toString());
+                                break;
+                            case(PlantContract.PlantEntry.image): //"image";
+                                plantData.setImage(jsonObject.get(key).toString());
+                                break;
+                            default:
+                                Log.e(LOG_TAG, "KEY VALUE DOES NOT ALIGN WITH THE EXPECTED VALUES FROM JSON!");
+
+                        }
                     }
                     Log.d(LOG_TAG, "Trying to insert: "+cv.toString());
                     db.insert(PlantContract.PlantEntry.TABLE_NAME, null, cv);
                     cv.clear();
+                    plantDataList.add(plantData);
                 }
             }
 
             return;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+            SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+            SharedPreferences.Editor edit = sharedPreferences.edit();
+            edit.putBoolean(getApplicationContext().getString(R.string.pref_previously_started), Boolean.TRUE);
+            edit.apply();
+            mAdapter = new MyAdapter(plantDataList);
+            mRecyclerView.setAdapter(mAdapter);
+            for(int i = 0; i< plantDataList.size(); i ++){
+                Log.d(LOG_TAG, "The plant at index "+ i + "is: "+plantDataList.get(i).getName());
+            }
         }
     }
 }
