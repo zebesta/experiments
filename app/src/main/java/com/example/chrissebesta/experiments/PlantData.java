@@ -3,7 +3,7 @@ package com.example.chrissebesta.experiments;
 /**
  * Created by chrissebesta on 6/23/16.
  */
-public class PlantData {
+public class PlantData implements Comparable<PlantData>{
     public String getId() {
         return id;
     }
@@ -190,4 +190,9 @@ public class PlantData {
         this.image = image;
     }
 
+    //Useful for alphabetizing lists
+    @Override
+    public int compareTo(PlantData another) {
+        return name.compareTo(another.name);
+    }
 }

@@ -25,6 +25,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 
 public class MainActivity extends AppCompatActivity {
@@ -207,6 +208,8 @@ public class MainActivity extends AppCompatActivity {
             SharedPreferences.Editor edit = sharedPreferences.edit();
             edit.putBoolean(getApplicationContext().getString(R.string.pref_previously_started), Boolean.TRUE);
             edit.apply();
+            //alphabetize list of gardening
+            Collections.sort(plantDataList);
             mAdapter = new MyAdapter(plantDataList, getApplicationContext());
             mRecyclerView.setAdapter(mAdapter);
             for(int i = 0; i< plantDataList.size(); i ++){

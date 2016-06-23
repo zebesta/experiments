@@ -82,9 +82,10 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
         holder.mNameTextViewInCard.setText(mDataset.get(position).getName());
         holder.mDescriptionTextViewInCard.setText(mDataset.get(position).getDescription());
         holder.mSunTextViewInCard.setText(mDataset.get(position).getOptimal_sun());
+        int cardWidth = holder.mCardView.getWidth();
         Picasso.with(mContext)
                 .load(mDataset.get(position).getImage())
-                .resize(mScreenWidth/2, mScreenWidth/4)
+                .resize(Math.min(mScreenWidth, mScreenHeight), Math.min(mScreenWidth/2, mScreenHeight/2))
                 .centerCrop()
                 .into(holder.mImageViewForCard);
     }
