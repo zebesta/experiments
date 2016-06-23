@@ -19,14 +19,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.ProtocolException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
@@ -82,7 +74,7 @@ public class MainActivity extends AppCompatActivity {
             String json = null;
             //get JSON from URL
             try {
-                URL url = new URL("http://harvesthelper.herokuapp.com/api/v1/plants?api_key=e6a6ddffb0a92973921287c8108c256b");
+                /*URL url = new URL("http://harvesthelper.herokuapp.com/api/v1/plants?api_key=e6a6ddffb0a92973921287c8108c256b");
                 HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
                 urlConnection.setRequestMethod("GET");
                 urlConnection.connect();
@@ -100,19 +92,13 @@ public class MainActivity extends AppCompatActivity {
                     return null;
                 }
                 json = buffer.toString();
-                Log.d(LOG_TAG, "The returned json is: "+json);
+                Log.d(LOG_TAG, "The returned json is: "+json);*/
                 //Process returned JSON
                 String fixedJson = getString(R.string.fixedJson);
                 Log.d(LOG_TAG, "The fixed json is: "+fixedJson);
                 getDataFromJson(fixedJson);
             } catch (JSONException e) {
                 Log.e(LOG_TAG, "Could not get data from JSON");
-            } catch (MalformedURLException e) {
-                e.printStackTrace();
-            } catch (ProtocolException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
             }
             return null;
         }
@@ -221,9 +207,10 @@ public class MainActivity extends AppCompatActivity {
             mAdapter = new MyAdapter(plantDataList, getApplicationContext(), new MyAdapter.OnItemClickListener() {
                 @Override
                 public void onItemClick(PlantData plantData) {
-                    Log.d(LOG_TAG, "You clicked "+ plantData.getName());
-                    Intent intent = new Intent(MainActivity.this, DetailsActivity.class);
-                    intent.putExtra(getString(R.string.plant_extra_key), plantData.getId());
+                    Log.d(LOG_TAG, "You clicked " + plantData.getName());
+                    Intent intent = new Intent(MainActivity.this, SimpleDetailsActivity.class);
+                    intent.putExtra(getString(R.string.plant_extra_key), plantData);
+                    startActivity(intent);
                 }
             });
             mRecyclerView.setAdapter(mAdapter);

@@ -12,7 +12,8 @@ public class DetailsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_details);
         Intent intent = getIntent();
-        String plantDataId = intent.getStringExtra(getString(R.string.plant_extra_key));
+        //String plantDataId = intent.getParcelableExtra(getString(R.string.plant_extra_key));
+        PlantData plantData = intent.getParcelableExtra(getString(R.string.plant_extra_key));
         DetailsActivityFragment df = new DetailsActivityFragment();
 
 

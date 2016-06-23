@@ -1,9 +1,12 @@
 package com.example.chrissebesta.experiments;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 /**
  * Created by chrissebesta on 6/23/16.
  */
-public class PlantData implements Comparable<PlantData>{
+public class PlantData implements Comparable<PlantData>, Parcelable{
     public String getId() {
         return id;
     }
@@ -194,5 +197,62 @@ public class PlantData implements Comparable<PlantData>{
     @Override
     public int compareTo(PlantData another) {
         return name.compareTo(another.name);
+    }
+
+    public int describeContents() {
+        return 0;
+    }
+
+    public void writeToParcel(Parcel out, int flags) {
+        out.writeString(id); //"id";
+        out.writeString(name); //"name";
+        out.writeString(description); //"description";
+        out.writeString(optimal_sun); //"optimal_sun";
+        out.writeString(optimal_soil); //"optimal_soil";
+        out.writeString(planting_considerations); //"planting_considerations";
+        out.writeString(when_to_plant); //"when_to_plant";
+        out.writeString(growing_from_seed); //"growing_from_seed";
+        out.writeString(transplanting); //"transplanting";
+        out.writeString(spacing); //"spacing";
+        out.writeString(watering); //"watering";
+        out.writeString(feeding); //"feeding";
+        out.writeString(other_care); //"other_care";
+        out.writeString(diseases); //"diseases";
+        out.writeString(pests); //"pests";
+        out.writeString(harvesting); //"harvesting";
+        out.writeString(storage_use); //"storage_use";
+        out.writeString(image); //"image";
+    }
+
+    public static final Parcelable.Creator<PlantData> CREATOR
+            = new Parcelable.Creator<PlantData>() {
+        public PlantData createFromParcel(Parcel in) {
+            return new PlantData(in);
+        }
+
+        public PlantData[] newArray(int size) {
+            return new PlantData[size];
+        }
+    };
+
+    private PlantData(Parcel in) {
+       id = in.readString();//(id); //"id";
+       name = in.readString();//(name); //"name";
+       description = in.readString();//(description); //"description";
+       optimal_sun = in.readString();//(optimal_sun); //"optimal_sun";
+       optimal_soil = in.readString();//(optimal_soil); //"optimal_soil";
+       planting_considerations = in.readString();//(planting_considerations); //"planting_considerations";
+       when_to_plant = in.readString();//(when_to_plant); //"when_to_plant";
+       growing_from_seed = in.readString();//(growing_from_seed); //"growing_from_seed";
+       transplanting = in.readString();//(transplanting); //"transplanting";
+       spacing = in.readString();//(spacing); //"spacing";
+       watering = in.readString();//(watering); //"watering";
+       feeding = in.readString();//(feeding); //"feeding";
+       other_care = in.readString();//(other_care); //"other_care";
+       diseases = in.readString();//(diseases); //"diseases";
+       pests = in.readString();//(pests); //"pests";
+       harvesting = in.readString();//(harvesting); //"harvesting";
+       storage_use = in.readString();//(storage_use); //"storage_use";
+       image = in.readString();//(image); //"image";
     }
 }
