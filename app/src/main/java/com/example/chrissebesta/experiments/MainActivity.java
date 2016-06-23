@@ -1,6 +1,7 @@
 package com.example.chrissebesta.experiments;
 
 import android.content.ContentValues;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
@@ -23,6 +24,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.ProtocolException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -61,6 +64,7 @@ public class MainActivity extends AppCompatActivity {
 //        }
         FetchJSON fetch = new FetchJSON();
         fetch.execute();
+
     }
 
 //    private void firstRun() {
@@ -78,7 +82,7 @@ public class MainActivity extends AppCompatActivity {
             String json = null;
             //get JSON from URL
             try {
-                URL url = new URL("http://http://harvesthelper.herokuapp.com/api/v1/plants?api_key=e6a6ddffb0a92973921287c8108c256b");
+                URL url = new URL("http://harvesthelper.herokuapp.com/api/v1/plants?api_key=e6a6ddffb0a92973921287c8108c256b");
                 HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
                 urlConnection.setRequestMethod("GET");
                 urlConnection.connect();
@@ -101,10 +105,14 @@ public class MainActivity extends AppCompatActivity {
                 String fixedJson = getString(R.string.fixedJson);
                 Log.d(LOG_TAG, "The fixed json is: "+fixedJson);
                 getDataFromJson(fixedJson);
-            } catch (IOException e) {
-                e.printStackTrace();
             } catch (JSONException e) {
                 Log.e(LOG_TAG, "Could not get data from JSON");
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            } catch (ProtocolException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
             }
             return null;
         }
@@ -210,7 +218,14 @@ public class MainActivity extends AppCompatActivity {
             edit.apply();
             //alphabetize list of gardening
             Collections.sort(plantDataList);
-            mAdapter = new MyAdapter(plantDataList, getApplicationContext());
+            mAdapter = new MyAdapter(plantDataList, getApplicationContext(), new MyAdapter.OnItemClickListener() {
+                @Override
+                public void onItemClick(PlantData plantData) {
+                    Log.d(LOG_TAG, "You clicked "+ plantData.getName());
+                    Intent intent = new Intent(MainActivity.this, DetailsActivity.class);
+                    intent.putExtra(getString(R.string.plant_extra_key), plantData.getId());
+                }
+            });
             mRecyclerView.setAdapter(mAdapter);
             for(int i = 0; i< plantDataList.size(); i ++){
                 Log.d(LOG_TAG, "The plant at index "+ i + "is: "+plantDataList.get(i).getName());

@@ -20,11 +20,16 @@ import java.util.ArrayList;
  * Created by chrissebesta on 6/23/16.
  */
 public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
+
+    public interface OnItemClickListener {
+        void onItemClick(PlantData plantData);
+    }
     //private String[] mDataset;
-    private ArrayList<PlantData> mDataset;
+    private final ArrayList<PlantData> mDataset;
     private Context mContext;
     private int mScreenWidth;
     private int mScreenHeight;
+    private final OnItemClickListener mListener;
 
 
     // Provide a reference to the views for each data item
@@ -47,13 +52,22 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
             mImageViewForCard = (ImageView) v.findViewById(R.id.card_image);
 
         }
+        public void bind(final PlantData item, final OnItemClickListener listener) {
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override public void onClick(View v) {
+                    listener.onItemClick(item);
+                }
+            });
+        }
+
     }
 
     // Provide a suitable constructor (depends on the kind of dataset)
     //public MyAdapter(String[] myDataset) {
-    public MyAdapter(ArrayList<PlantData> myDataset, Context context) {
+    public MyAdapter(ArrayList<PlantData> myDataset, Context context, OnItemClickListener listener) {
         mContext = context;
         mDataset = myDataset;
+        mListener = listener;
         WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
         Display display = wm.getDefaultDisplay();
         Point size = new Point();
@@ -82,14 +96,15 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
         holder.mNameTextViewInCard.setText(mDataset.get(position).getName());
         holder.mDescriptionTextViewInCard.setText(mDataset.get(position).getDescription());
         holder.mSunTextViewInCard.setText(mDataset.get(position).getOptimal_sun());
+        holder.bind(mDataset.get(position), mListener);
         int cardWidth = holder.mCardView.getWidth();
         Picasso.with(mContext)
                 .load(mDataset.get(position).getImage())
-                .resize(Math.min(mScreenWidth, mScreenHeight), Math.min(mScreenWidth/2, mScreenHeight/2))
+                .resize(Math.min(mScreenWidth, mScreenHeight), Math.min(mScreenWidth / 2, mScreenHeight / 2))
                 .centerCrop()
                 .into(holder.mImageViewForCard);
-    }
 
+    }
     // Return the size of your dataset (invoked by the layout manager)
     @Override
     public int getItemCount() {
