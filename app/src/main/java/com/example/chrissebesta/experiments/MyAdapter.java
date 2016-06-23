@@ -1,11 +1,18 @@
 package com.example.chrissebesta.experiments;
 
+import android.content.Context;
+import android.graphics.Point;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -15,6 +22,10 @@ import java.util.ArrayList;
 public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
     //private String[] mDataset;
     private ArrayList<PlantData> mDataset;
+    private Context mContext;
+    private int mScreenWidth;
+    private int mScreenHeight;
+
 
     // Provide a reference to the views for each data item
     // Complex data items may need more than one view per item, and
@@ -22,20 +33,33 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
     public static class ViewHolder extends RecyclerView.ViewHolder {
         // each data item is just a string in this case
         public CardView mCardView;
-        public TextView mTextViewInCard;
+        public ImageView mImageViewForCard;
+        public TextView mNameTextViewInCard;
+        public TextView mDescriptionTextViewInCard;
+        public TextView mSunTextViewInCard;
 
         public ViewHolder(View v) {
             super(v);
             mCardView = (CardView) v;
-            mTextViewInCard = (TextView) v.findViewById(R.id.text_view_in_card);
+            mNameTextViewInCard = (TextView) v.findViewById(R.id.card_text_view_for_name);
+            mDescriptionTextViewInCard = (TextView) v.findViewById(R.id.card_text_view_for_description);
+            mSunTextViewInCard = (TextView) v.findViewById(R.id.card_text_view_for_optimal_sun);
+            mImageViewForCard = (ImageView) v.findViewById(R.id.card_image);
+
         }
     }
 
     // Provide a suitable constructor (depends on the kind of dataset)
     //public MyAdapter(String[] myDataset) {
-    public MyAdapter(ArrayList<PlantData> myDataset) {
-
+    public MyAdapter(ArrayList<PlantData> myDataset, Context context) {
+        mContext = context;
         mDataset = myDataset;
+        WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+        Display display = wm.getDefaultDisplay();
+        Point size = new Point();
+        display.getSize(size);
+        mScreenWidth = size.x;
+        mScreenHeight = size.y;
     }
 
     // Create new views (invoked by the layout manager)
@@ -55,9 +79,14 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
     public void onBindViewHolder(ViewHolder holder, int position) {
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
-        //holder.mTextViewInCard.setText(mDataset[position]);
-        holder.mTextViewInCard.setText(mDataset.get(position).getName());
-
+        holder.mNameTextViewInCard.setText(mDataset.get(position).getName());
+        holder.mDescriptionTextViewInCard.setText(mDataset.get(position).getDescription());
+        holder.mSunTextViewInCard.setText(mDataset.get(position).getOptimal_sun());
+        Picasso.with(mContext)
+                .load(mDataset.get(position).getImage())
+                .resize(mScreenWidth/2, mScreenWidth/4)
+                .centerCrop()
+                .into(holder.mImageViewForCard);
     }
 
     // Return the size of your dataset (invoked by the layout manager)

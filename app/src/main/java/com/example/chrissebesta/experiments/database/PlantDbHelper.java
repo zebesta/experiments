@@ -25,7 +25,7 @@ public class PlantDbHelper extends SQLiteOpenHelper {
         final String SQL_CREATE_PLANT_TABLE = "CREATE TABLE " + PlantContract.PlantEntry.TABLE_NAME + " (" +
                 PlantContract.PlantEntry._ID + " INTEGER PRIMARY KEY," +
                 PlantContract.PlantEntry.id + " TEXT NOT NULL, " +
-                PlantContract.PlantEntry.name + " TEXT NOT NULL, " +
+                PlantContract.PlantEntry.name + " TEXT NOT NULL UNIQUE, " +
                 PlantContract.PlantEntry.description + " TEXT NOT NULL, " +
                 PlantContract.PlantEntry.optimal_sun + " TEXT NOT NULL, " +
                 PlantContract.PlantEntry.optimal_soil + " TEXT NOT NULL, " +

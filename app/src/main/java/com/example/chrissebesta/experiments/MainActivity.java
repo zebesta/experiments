@@ -207,7 +207,7 @@ public class MainActivity extends AppCompatActivity {
             SharedPreferences.Editor edit = sharedPreferences.edit();
             edit.putBoolean(getApplicationContext().getString(R.string.pref_previously_started), Boolean.TRUE);
             edit.apply();
-            mAdapter = new MyAdapter(plantDataList);
+            mAdapter = new MyAdapter(plantDataList, getApplicationContext());
             mRecyclerView.setAdapter(mAdapter);
             for(int i = 0; i< plantDataList.size(); i ++){
                 Log.d(LOG_TAG, "The plant at index "+ i + "is: "+plantDataList.get(i).getName());
