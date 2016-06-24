@@ -100,7 +100,7 @@ public class SimpleDetailsActivity extends AppCompatActivity {
         }
         TextView additionalInformationTextView = (TextView) findViewById(R.id.simple_details_additional_information);
         additionalInformationTextView.setText(additionalInformation);
-        Log.d(LOG_TAG, "Additional information is: "+additionalInformation);
+        Log.d(LOG_TAG, "Additional information is: " + additionalInformation);
 
         Log.d(LOG_TAG, plantData.getDescription());
 

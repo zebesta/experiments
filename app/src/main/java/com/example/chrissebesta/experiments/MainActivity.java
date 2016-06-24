@@ -45,15 +45,6 @@ public class MainActivity extends AppCompatActivity {
             myDataList.add(i, "Im adding an item at index "+ i);
         }
 
-//        mAdapter = new MyAdapter(plantDataList);
-//        mRecyclerView.setAdapter(mAdapter);
-
-//        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-//
-//        boolean previouslyStarted = sharedPreferences.getBoolean(getString(R.string.pref_previously_started), false);
-//        if (!previouslyStarted) {
-//            firstRun();
-//        }
         FetchJSON fetch = new FetchJSON();
         fetch.execute();
 

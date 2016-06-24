@@ -40,14 +40,14 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
         public CardView mCardView;
         public ImageView mImageViewForCard;
         public TextView mNameTextViewInCard;
-        public TextView mDescriptionTextViewInCard;
+        //public TextView mDescriptionTextViewInCard;
         public TextView mSunTextViewInCard;
 
         public ViewHolder(View v) {
             super(v);
             mCardView = (CardView) v;
             mNameTextViewInCard = (TextView) v.findViewById(R.id.card_text_view_for_name);
-            mDescriptionTextViewInCard = (TextView) v.findViewById(R.id.card_text_view_for_description);
+            //mDescriptionTextViewInCard = (TextView) v.findViewById(R.id.card_text_view_for_description);
             mSunTextViewInCard = (TextView) v.findViewById(R.id.card_text_view_for_optimal_sun);
             mImageViewForCard = (ImageView) v.findViewById(R.id.card_image);
 
@@ -94,7 +94,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
         holder.mNameTextViewInCard.setText(mDataset.get(position).getName());
-        holder.mDescriptionTextViewInCard.setText(mDataset.get(position).getDescription());
+//        holder.mDescriptionTextViewInCard.setText(mDataset.get(position).getDescription());
         holder.mSunTextViewInCard.setText(mDataset.get(position).getOptimal_sun());
         holder.bind(mDataset.get(position), mListener);
         int cardWidth = holder.mCardView.getWidth();
