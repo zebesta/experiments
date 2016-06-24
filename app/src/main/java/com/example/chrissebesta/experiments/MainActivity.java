@@ -24,10 +24,12 @@ import java.util.Collections;
 import java.util.Iterator;
 
 public class MainActivity extends AppCompatActivity {
+    private static final String DETAILFRAGMENT_TAG = "details fragment tag";
     private final String LOG_TAG = this.getClass().getSimpleName();
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
+    private boolean mTwoPane;
     ArrayList<PlantData> plantDataList = new ArrayList<>();
 
     @Override
@@ -47,6 +49,22 @@ public class MainActivity extends AppCompatActivity {
 
         FetchJSON fetch = new FetchJSON();
         fetch.execute();
+
+        if (findViewById(R.id.plant_details_container) != null) {
+            mTwoPane = true;
+            Log.d("Two pane", "Two pane is set to true, need to create fragment");
+
+            //if (savedInstanceState == null) {
+                //Log.d("Two pane", "saved instance is null, creating a new details activity fragment");
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.plant_details_container, new DetailsActivityFragment(), DETAILFRAGMENT_TAG)
+                        .commit();
+            //}
+        } else{
+            Log.d("Two pane", "Two pane is set to false");
+
+            mTwoPane = false;
+        }
 
     }
 
@@ -104,10 +122,10 @@ public class MainActivity extends AppCompatActivity {
                 PlantDbHelper helper = new PlantDbHelper(getApplicationContext());
                 SQLiteDatabase db = helper.getWritableDatabase();
                 JSONArray jsonArray = new JSONArray(returnedJson);
-                Log.d(LOG_TAG, "The json array has been received!");
+                //Log.d(LOG_TAG, "The json array has been received!");
                 for (int i = 0; i < jsonArray.length(); i++) {
                     JSONObject jsonObject = jsonArray.getJSONObject(i);
-                    Log.d(LOG_TAG, "The json object has been received!");
+                    //Log.d(LOG_TAG, "The json object has been received!");
                     //Pull keys from JSON Object to avoid errors from missing key value pairs
                     Iterator<String> iter = jsonObject.keys();
 
@@ -176,8 +194,8 @@ public class MainActivity extends AppCompatActivity {
 
                         }
                     }
-                    Log.d(LOG_TAG, "Trying to insert: "+cv.toString());
-                    db.insert(PlantContract.PlantEntry.TABLE_NAME, null, cv);
+                    //Log.d(LOG_TAG, "Trying to insert: "+cv.toString());
+                    //db.insert(PlantContract.PlantEntry.TABLE_NAME, null, cv);
                     cv.clear();
                     plantDataList.add(plantData);
                 }
@@ -202,12 +220,13 @@ public class MainActivity extends AppCompatActivity {
                     //TODO should actually use a bundle here instead pf parcel, parcel is intended for services?
                     Intent intent = new Intent(MainActivity.this, SimpleDetailsActivity.class);
                     intent.putExtra(getString(R.string.plant_extra_key), plantData);
+//                    Intent intent = new Intent(MainActivity.this, DetailsActivity)
                     startActivity(intent);
                 }
             });
             mRecyclerView.setAdapter(mAdapter);
             for(int i = 0; i< plantDataList.size(); i ++){
-                Log.d(LOG_TAG, "The plant at index "+ i + "is: "+plantDataList.get(i).getName());
+                //Log.d(LOG_TAG, "The plant at index "+ i + "is: "+plantDataList.get(i).getName());
             }
         }
     }
