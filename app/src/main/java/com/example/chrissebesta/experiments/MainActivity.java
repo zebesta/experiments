@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         mRecyclerView = (RecyclerView) findViewById(R.id.recycle_view);
-        mRecyclerView.setHasFixedSize(true);
+        //mRecyclerView.setHasFixedSize(true);
         mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
         ArrayList<String> myDataList = new ArrayList<>();
@@ -208,6 +208,7 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public void onItemClick(PlantData plantData) {
                     Log.d(LOG_TAG, "You clicked " + plantData.getName());
+                    //TODO should actually use a bundle here instead pf parcel, parcel is intended for services?
                     Intent intent = new Intent(MainActivity.this, SimpleDetailsActivity.class);
                     intent.putExtra(getString(R.string.plant_extra_key), plantData);
                     startActivity(intent);
