@@ -43,8 +43,8 @@ public class MainActivity extends AppCompatActivity {
         ArrayList<String> myDataList = new ArrayList<>();
         //String[] myData = {"Hello", "This", "is a random", "string", "with lots of", "different data with different", "lengths", "to test the way", "recycle view works" };
 
-        for (int i = 0; i < 30; i ++){
-            myDataList.add(i, "Im adding an item at index "+ i);
+        for (int i = 0; i < 30; i++) {
+            myDataList.add(i, "Im adding an item at index " + i);
         }
 
         FetchJSON fetch = new FetchJSON();
@@ -55,12 +55,12 @@ public class MainActivity extends AppCompatActivity {
             Log.d("Two pane", "Two pane is set to true, need to create fragment");
 
             //if (savedInstanceState == null) {
-                //Log.d("Two pane", "saved instance is null, creating a new details activity fragment");
-                getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.plant_details_container, new DetailsActivityFragment(), DETAILFRAGMENT_TAG)
-                        .commit();
+            //Log.d("Two pane", "saved instance is null, creating a new details activity fragment");
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.plant_details_container, new DetailsActivityFragment(), DETAILFRAGMENT_TAG)
+                    .commit();
             //}
-        } else{
+        } else {
             Log.d("Two pane", "Two pane is set to false");
 
             mTwoPane = false;
@@ -75,7 +75,6 @@ public class MainActivity extends AppCompatActivity {
 
 
     private class FetchJSON extends AsyncTask<Void, Void, Void> {
-
 
 
         @Override
@@ -104,7 +103,7 @@ public class MainActivity extends AppCompatActivity {
                 Log.d(LOG_TAG, "The returned json is: "+json);*/
                 //Process returned JSON
                 String fixedJson = getString(R.string.fixedJson);
-                Log.d(LOG_TAG, "The fixed json is: "+fixedJson);
+                Log.d(LOG_TAG, "The fixed json is: " + fixedJson);
                 getDataFromJson(fixedJson);
             } catch (JSONException e) {
                 Log.e(LOG_TAG, "Could not get data from JSON");
@@ -113,10 +112,9 @@ public class MainActivity extends AppCompatActivity {
         }
 
 
-
         private void getDataFromJson(String returnedJson) throws JSONException {
             //pull data from JSON request response and put in to JSON array
-            if (returnedJson.length()==0) {
+            if (returnedJson.length() == 0) {
                 Log.d(LOG_TAG, "THE RETURNED JSON ARRAY IS EMPTY!");
             } else {
                 PlantDbHelper helper = new PlantDbHelper(getApplicationContext());
@@ -134,59 +132,59 @@ public class MainActivity extends AppCompatActivity {
                     while (iter.hasNext()) {
                         String key = iter.next();
                         cv.put(key, jsonObject.get(key).toString());
-                        switch(key){
-                            case(PlantContract.PlantEntry.id): //"id";
+                        switch (key) {
+                            case (PlantContract.PlantEntry.id): //"id";
                                 plantData.setId(jsonObject.get(key).toString());
                                 break;
-                            case(PlantContract.PlantEntry.name): //"name";
+                            case (PlantContract.PlantEntry.name): //"name";
                                 plantData.setName(jsonObject.get(key).toString());
                                 break;
-                            case(PlantContract.PlantEntry.description): //"description";
+                            case (PlantContract.PlantEntry.description): //"description";
                                 plantData.setDescription(jsonObject.get(key).toString());
                                 break;
-                            case(PlantContract.PlantEntry.optimal_sun): //"optimal_sun";
+                            case (PlantContract.PlantEntry.optimal_sun): //"optimal_sun";
                                 plantData.setOptimal_sun(jsonObject.get(key).toString());
                                 break;
-                            case(PlantContract.PlantEntry.optimal_soil): //"optimal_soil";
+                            case (PlantContract.PlantEntry.optimal_soil): //"optimal_soil";
                                 plantData.setOptimal_soil(jsonObject.get(key).toString());
                                 break;
-                            case(PlantContract.PlantEntry.planting_considerations): //"planting_considerations";
+                            case (PlantContract.PlantEntry.planting_considerations): //"planting_considerations";
                                 plantData.setPlanting_considerations(jsonObject.get(key).toString());
                                 break;
-                            case(PlantContract.PlantEntry.when_to_plant): //"when_to_plant";
+                            case (PlantContract.PlantEntry.when_to_plant): //"when_to_plant";
                                 plantData.setWhen_to_plant(jsonObject.get(key).toString());
                                 break;
-                            case(PlantContract.PlantEntry.growing_from_seed): //"growing_from_seed";
+                            case (PlantContract.PlantEntry.growing_from_seed): //"growing_from_seed";
                                 plantData.setGrowing_from_seed(jsonObject.get(key).toString());
                                 break;
-                            case(PlantContract.PlantEntry.transplanting): //"transplanting";
+                            case (PlantContract.PlantEntry.transplanting): //"transplanting";
                                 plantData.setTransplanting(jsonObject.get(key).toString());
                                 break;
-                            case(PlantContract.PlantEntry.spacing): //"spacing";
+                            case (PlantContract.PlantEntry.spacing): //"spacing";
                                 plantData.setSpacing(jsonObject.get(key).toString());
                                 break;
-                            case(PlantContract.PlantEntry.watering): //"watering";
+                            case (PlantContract.PlantEntry.watering): //"watering";
                                 plantData.setWatering(jsonObject.get(key).toString());
                                 break;
-                            case(PlantContract.PlantEntry.feeding): //"feeding";
+                            case (PlantContract.PlantEntry.feeding): //"feeding";
                                 plantData.setFeeding(jsonObject.get(key).toString());
                                 break;
-                            case(PlantContract.PlantEntry.other_care): //"other_care";
+                            case (PlantContract.PlantEntry.other_care): //"other_care";
                                 plantData.setOther_care(jsonObject.get(key).toString());
                                 break;
-                            case(PlantContract.PlantEntry.diseases): //"diseases";
+                            case (PlantContract.PlantEntry.diseases): //"diseases";
                                 plantData.setDiseases(jsonObject.get(key).toString());
                                 break;
-                            case(PlantContract.PlantEntry.pests): //"pests";
+                            case (PlantContract.PlantEntry.pests): //"pests";
                                 plantData.setPests(jsonObject.get(key).toString());
                                 break;
-                            case(PlantContract.PlantEntry.harvesting): //"harvesting";
+                            case (PlantContract.PlantEntry.harvesting): //"harvesting";
                                 plantData.setHarvesting(jsonObject.get(key).toString());
                                 break;
-                            case(PlantContract.PlantEntry.storage_use): //"storage_use";
+                            case (PlantContract.PlantEntry.storage_use): //"storage_use";
                                 plantData.setStorage_use(jsonObject.get(key).toString());
                                 break;
-                            case(PlantContract.PlantEntry.image): //"image";
+                            case (PlantContract.PlantEntry.image): //"image";
                                 plantData.setImage(jsonObject.get(key).toString());
                                 break;
                             default:
@@ -218,14 +216,26 @@ public class MainActivity extends AppCompatActivity {
                 public void onItemClick(PlantData plantData) {
                     Log.d(LOG_TAG, "You clicked " + plantData.getName());
                     //TODO should actually use a bundle here instead pf parcel, parcel is intended for services?
-                    Intent intent = new Intent(MainActivity.this, SimpleDetailsActivity.class);
-                    intent.putExtra(getString(R.string.plant_extra_key), plantData);
-//                    Intent intent = new Intent(MainActivity.this, DetailsActivity)
-                    startActivity(intent);
+                    //Intent intent = new Intent(MainActivity.this, SimpleDetailsActivity.class);
+                    if(mTwoPane) {
+                        Bundle arguments = new Bundle();
+                        arguments.putParcelable(getString(R.string.plant_extra_key), plantData);
+                        Log.d(LOG_TAG, "Adding arguments to the details fragment");
+                        DetailsActivityFragment df = new DetailsActivityFragment();
+                        df.setArguments(arguments);
+
+                        getSupportFragmentManager().beginTransaction()
+                                .replace(R.id.plant_details_container, df, DETAILFRAGMENT_TAG)
+                                .commit();
+                    }else {
+                        Intent intent = new Intent(MainActivity.this, DetailsActivity.class);
+                        intent.putExtra(getString(R.string.plant_extra_key), plantData);
+                        startActivity(intent);
+                    }
                 }
             });
             mRecyclerView.setAdapter(mAdapter);
-            for(int i = 0; i< plantDataList.size(); i ++){
+            for (int i = 0; i < plantDataList.size(); i++) {
                 //Log.d(LOG_TAG, "The plant at index "+ i + "is: "+plantDataList.get(i).getName());
             }
         }
