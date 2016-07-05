@@ -26,8 +26,11 @@ public class DetailsActivity extends AppCompatActivity {
         DetailsActivityFragment df = new DetailsActivityFragment();
         df.setArguments(arguments);
 
+//        getSupportFragmentManager().beginTransaction()
+//                .add(R.id.plant_details_container, df)
+//                .commit();
         getSupportFragmentManager().beginTransaction()
-                .add(R.id.plant_details_container, df)
+                .replace(R.id.plant_details_container, df, MainActivity.DETAILFRAGMENT_TAG)
                 .commit();
 
 

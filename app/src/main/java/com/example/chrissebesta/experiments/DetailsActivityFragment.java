@@ -16,7 +16,7 @@ public class DetailsActivityFragment extends Fragment {
     private final String LOG_TAG = this.getClass().getSimpleName();
     PlantData plantData = new PlantData("12", "Click a plant for additional information!", "description", "sunlght!", null, null, null, null, null, null, null, null, null, null, null, null, null, null);
     public DetailsActivityFragment() {
-        Log.d(LOG_TAG, "Details Activity Fragment constructor is called");
+        Log.d(LOG_TAG, "Details Activity Fragment constructor is called for "+plantData.getName());
     }
 
     @Override

@@ -24,7 +24,7 @@ import java.util.Collections;
 import java.util.Iterator;
 
 public class MainActivity extends AppCompatActivity {
-    private static final String DETAILFRAGMENT_TAG = "details fragment tag";
+    public static final String DETAILFRAGMENT_TAG =  "details fragment tag";
     private final String LOG_TAG = this.getClass().getSimpleName();
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
