@@ -197,6 +197,7 @@ public class MainActivity extends AppCompatActivity {
                     cv.clear();
                     plantDataList.add(plantData);
                 }
+                db.close();
             }
 
             return;
