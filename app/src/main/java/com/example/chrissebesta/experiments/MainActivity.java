@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -56,9 +57,15 @@ public class MainActivity extends AppCompatActivity {
 
             //if (savedInstanceState == null) {
             //Log.d("Two pane", "saved instance is null, creating a new details activity fragment");
-            getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.plant_details_container, new DetailsActivityFragment(), DETAILFRAGMENT_TAG)
-                    .commit();
+            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+            ft.setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_right);
+
+
+            ft.replace(R.id.plant_details_container, new DetailsActivityFragment(), DETAILFRAGMENT_TAG);
+            ft.commit();
+//            getSupportFragmentManager().beginTransaction()
+//                    .replace(R.id.plant_details_container, new DetailsActivityFragment(), DETAILFRAGMENT_TAG)
+//                    .commit();
             //}
         } else {
             Log.d("Two pane", "Two pane is set to false");
@@ -225,9 +232,14 @@ public class MainActivity extends AppCompatActivity {
                         DetailsActivityFragment df = new DetailsActivityFragment();
                         df.setArguments(arguments);
 
-                        getSupportFragmentManager().beginTransaction()
-                                .replace(R.id.plant_details_container, df, DETAILFRAGMENT_TAG)
-                                .commit();
+                        //TODO add animations
+                        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+                        ft.setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_right);
+                        ft.replace(R.id.plant_details_container, df, DETAILFRAGMENT_TAG);
+                        ft.commit();
+//                        getSupportFragmentManager().beginTransaction()
+//                                .replace(R.id.plant_details_container, df, DETAILFRAGMENT_TAG)
+//                                .commit();
                     }else {
                         Intent intent = new Intent(MainActivity.this, DetailsActivity.class);
                         intent.putExtra(getString(R.string.plant_extra_key), plantData);
