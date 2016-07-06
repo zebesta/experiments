@@ -29,7 +29,7 @@ public class DetailsActivity extends AppCompatActivity {
 //        getSupportFragmentManager().beginTransaction()
 //                .add(R.id.plant_details_container, df)
 //                .commit();
-        getSupportFragmentManager().beginTransaction()
+        getFragmentManager().beginTransaction()
                 .replace(R.id.plant_details_container, df, MainActivity.DETAILFRAGMENT_TAG)
                 .commit();
 

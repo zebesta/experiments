@@ -7,7 +7,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -57,15 +56,23 @@ public class MainActivity extends AppCompatActivity {
 
             //if (savedInstanceState == null) {
             //Log.d("Two pane", "saved instance is null, creating a new details activity fragment");
-            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-            ft.setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_right);
 
-
-            ft.replace(R.id.plant_details_container, new DetailsActivityFragment(), DETAILFRAGMENT_TAG);
-            ft.commit();
+            //With animations
+//            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+//            ft.setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_right);
+//            ft.replace(R.id.plant_details_container, new DetailsActivityFragment(), DETAILFRAGMENT_TAG);
+//            ft.commit();
+            //without animations
+            //Load a default fragment
 //            getSupportFragmentManager().beginTransaction()
 //                    .replace(R.id.plant_details_container, new DetailsActivityFragment(), DETAILFRAGMENT_TAG)
 //                    .commit();
+            getFragmentManager().beginTransaction()
+                    .replace(R.id.plant_details_container, new DetailsActivityFragment(), DETAILFRAGMENT_TAG)
+                    .commit();
+
+            //with animator animation
+
             //}
         } else {
             Log.d("Two pane", "Two pane is set to false");
@@ -232,14 +239,39 @@ public class MainActivity extends AppCompatActivity {
                         DetailsActivityFragment df = new DetailsActivityFragment();
                         df.setArguments(arguments);
 
-                        //TODO add animations
-                        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-                        ft.setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_right);
-                        ft.replace(R.id.plant_details_container, df, DETAILFRAGMENT_TAG);
-                        ft.commit();
+                        //With animation
+//                        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+//                        ft.setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_right);
+//                        ft.replace(R.id.plant_details_container, df, DETAILFRAGMENT_TAG);
+//                        ft.commit();
+                        //without animation
 //                        getSupportFragmentManager().beginTransaction()
 //                                .replace(R.id.plant_details_container, df, DETAILFRAGMENT_TAG)
 //                                .commit();
+                        getFragmentManager()
+                                .beginTransaction()
+
+                                // Replace the default fragment animations with animator resources
+                                // representing rotations when switching to the back of the card, as
+                                // well as animator resources representing rotations when flipping
+                                // back to the front (e.g. when the system Back button is pressed).
+                                .setCustomAnimations(
+                                        R.animator.card_flip_right_in,
+                                        R.animator.card_flip_right_out,
+                                        R.animator.card_flip_left_in,
+                                        R.animator.card_flip_left_out)
+
+                                // Replace any fragments currently in the container view with a
+                                // fragment representing the next page (indicated by the
+                                // just-incremented currentPage variable).
+                                .replace(R.id.plant_details_container, df)
+
+                                // Add this transaction to the back stack, allowing users to press
+                                // Back to get to the front of the card.
+                                .addToBackStack(null)
+
+                                // Commit the transaction.
+                                .commit();
                     }else {
                         Intent intent = new Intent(MainActivity.this, DetailsActivity.class);
                         intent.putExtra(getString(R.string.plant_extra_key), plantData);

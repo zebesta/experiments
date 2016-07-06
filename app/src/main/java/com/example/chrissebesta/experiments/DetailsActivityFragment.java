@@ -1,7 +1,6 @@
 package com.example.chrissebesta.experiments;
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,7 +10,7 @@ import android.widget.TextView;
 /**
  * A placeholder fragment containing a simple view.
  */
-public class DetailsActivityFragment extends Fragment {
+public class DetailsActivityFragment extends android.app.Fragment {
 
     private final String LOG_TAG = this.getClass().getSimpleName();
     PlantData plantData = new PlantData("12", "Click a plant for additional information!", "description", "sunlght!", null, null, null, null, null, null, null, null, null, null, null, null, null, null);
