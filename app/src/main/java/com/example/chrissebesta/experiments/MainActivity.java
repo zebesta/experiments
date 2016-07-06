@@ -257,9 +257,7 @@ public class MainActivity extends AppCompatActivity {
                                 // back to the front (e.g. when the system Back button is pressed).
                                 .setCustomAnimations(
                                         R.animator.card_flip_right_in,
-                                        R.animator.card_flip_right_out,
-                                        R.animator.card_flip_left_in,
-                                        R.animator.card_flip_left_out)
+                                        R.animator.card_flip_right_out)
 
                                 // Replace any fragments currently in the container view with a
                                 // fragment representing the next page (indicated by the
