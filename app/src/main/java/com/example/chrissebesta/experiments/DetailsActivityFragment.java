@@ -1,10 +1,13 @@
 package com.example.chrissebesta.experiments;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 /**
@@ -22,14 +25,37 @@ public class DetailsActivityFragment extends android.app.Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        View rootView = inflater.inflate(R.layout.fragment_details, container, false);
+//        Button wikipediaButton = (Button) rootView.findViewById(R.id.wikipedia_button);
+//        wikipediaButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                //TODO plants with problems for this cheesy hack: Beans, Mint, Sage
+//                Intent browserIntent = new Intent(Intent.ACTION_VIEW);
+//                browserIntent.setData(Uri.parse("https://en.m.wikipedia.org/wiki/"+plantData.getName().toLowerCase()));
+//                startActivity(browserIntent);
+//            }
+//        });
+        ImageButton wikipediaImageButton = (ImageButton) rootView.findViewById(R.id.wikipedia_image_button);
+        wikipediaImageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //TODO plants with problems for this cheesy hack: Beans, Mint, Sage
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW);
+                browserIntent.setData(Uri.parse("https://en.m.wikipedia.org/wiki/"+plantData.getName().toLowerCase()));
+                startActivity(browserIntent);
+            }
+        });
+        TextView tv = (TextView) rootView.findViewById(R.id.details_text_view_for_name);
+
         Bundle arguments = getArguments();
         if (arguments != null) {
             Log.d(LOG_TAG, "Populating the plant data based on the passed in plant data.");
             plantData = arguments.getParcelable(getString(R.string.plant_extra_key));
+//            wikipediaButton.setVisibility(View.VISIBLE);
+            wikipediaImageButton.setVisibility(View.VISIBLE);
         }
 
-        View rootView = inflater.inflate(R.layout.fragment_details, container, false);
-        TextView tv = (TextView) rootView.findViewById(R.id.details_text_view_for_name);
         tv.setText("Dynamically adjusting text!");
         tv.setText(plantData.getName());
 
