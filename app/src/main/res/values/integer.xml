@@ -2,11 +2,11 @@
 <resources>
     <integer
         name="card_flip_time_half"
-        >250</integer>
+        >200</integer>
     <integer
         name="card_flip_time_full"
-        >500</integer>
+        >400</integer>
     <integer
         name="slide_animation_time"
-        >250</integer>
+        >200</integer>
 </resources>

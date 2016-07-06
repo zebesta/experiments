@@ -39,30 +39,18 @@ public class DetailsActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
+
     public boolean onOptionsItemSelected(MenuItem item) {
-        // TODO Auto-generated method stub
+        // Mannualy replacing animation for home so that it matches the animation when the back button is pressed
         switch (item.getItemId()) {
-            case R.id.home:
-                Log.d(LOG_TAG, "Overided home button called");
+            case android.R.id.home:
                 finish();
                 overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
                 return true;
-            case 16908332:
-                Log.d(LOG_TAG, "Overided home hacked button called");
-                finish();
-                overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
             default:
                 Log.d(LOG_TAG, ""+item.getItemId()+ " was clicked");
                 break;
         }
         return super.onOptionsItemSelected(item);
-    }
-
-
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        Log.d(LOG_TAG, "Overided back button called");
-        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
     }
 }
