@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Experiments</string>
+    <string name="app_name">Garden Helper</string>
     <string name="keyId">id</string>
     <string name="keyName">name</string>
     <string name="keyDescription">description</string>
