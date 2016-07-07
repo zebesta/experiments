@@ -36,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         mRecyclerView = (RecyclerView) findViewById(R.id.recycle_view);
         //mRecyclerView.setHasFixedSize(true);
         mLayoutManager = new LinearLayoutManager(this);
@@ -257,7 +258,9 @@ public class MainActivity extends AppCompatActivity {
                                 // back to the front (e.g. when the system Back button is pressed).
                                 .setCustomAnimations(
                                         R.animator.card_flip_right_in,
-                                        R.animator.card_flip_right_out)
+                                        R.animator.card_flip_right_out,
+                                        R.animator.card_flip_left_in,
+                                        R.animator.card_flip_left_out)
 
                                 // Replace any fragments currently in the container view with a
                                 // fragment representing the next page (indicated by the
