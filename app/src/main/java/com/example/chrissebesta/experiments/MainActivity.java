@@ -1,5 +1,6 @@
 package com.example.chrissebesta.experiments;
 
+import android.app.FragmentTransaction;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -251,6 +252,8 @@ public class MainActivity extends AppCompatActivity {
 //                                .commit();
                         getFragmentManager()
                                 .beginTransaction()
+                                //Using transition
+                                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
 
                                 // Replace the default fragment animations with animator resources
                                 // representing rotations when switching to the back of the card, as
