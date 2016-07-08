@@ -1,6 +1,5 @@
 package com.example.chrissebesta.experiments;
 
-import android.app.FragmentTransaction;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -11,7 +10,11 @@ import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.transition.Slide;
+import android.transition.TransitionManager;
 import android.util.Log;
+import android.view.Gravity;
+import android.widget.FrameLayout;
 
 import com.example.chrissebesta.experiments.database.PlantContract;
 import com.example.chrissebesta.experiments.database.PlantDbHelper;
@@ -31,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
     private boolean mTwoPane;
+    private FrameLayout mFrameContainer;
     ArrayList<PlantData> plantDataList = new ArrayList<>();
 
     @Override
@@ -54,6 +58,7 @@ public class MainActivity extends AppCompatActivity {
 
         if (findViewById(R.id.plant_details_container) != null) {
             mTwoPane = true;
+            mFrameContainer = (FrameLayout) findViewById(R.id.plant_details_container);
             Log.d("Two pane", "Two pane is set to true, need to create fragment");
 
             //if (savedInstanceState == null) {
@@ -250,20 +255,21 @@ public class MainActivity extends AppCompatActivity {
 //                        getSupportFragmentManager().beginTransaction()
 //                                .replace(R.id.plant_details_container, df, DETAILFRAGMENT_TAG)
 //                                .commit();
+                        TransitionManager.beginDelayedTransition(mFrameContainer, new Slide(Gravity.LEFT));
                         getFragmentManager()
                                 .beginTransaction()
                                 //Using transition
-                                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                                //.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
 
                                 // Replace the default fragment animations with animator resources
                                 // representing rotations when switching to the back of the card, as
                                 // well as animator resources representing rotations when flipping
                                 // back to the front (e.g. when the system Back button is pressed).
-                                .setCustomAnimations(
-                                        R.animator.card_flip_right_in,
-                                        R.animator.card_flip_right_out,
-                                        R.animator.card_flip_left_in,
-                                        R.animator.card_flip_left_out)
+//                                .setCustomAnimations(
+//                                        R.animator.card_flip_right_in,
+//                                        R.animator.card_flip_right_out,
+//                                        R.animator.card_flip_left_in,
+//                                        R.animator.card_flip_left_out)
 
                                 // Replace any fragments currently in the container view with a
                                 // fragment representing the next page (indicated by the
